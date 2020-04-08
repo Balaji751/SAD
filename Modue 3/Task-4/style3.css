@@ -1,0 +1,24 @@
+h1{
+    color : blue;
+    text-align : center;
+}
+h2{
+    font-size: large;
+    
+}
+p{
+    color : brown;
+}
+table{
+    border: 2px solid black;
+    border-collapse: collapse;
+    width:40%;
+}
+th,td{
+    border: 1px solid black;
+    padding: 4px;
+    text-align: center;
+}
+th{
+    background-color: lightgray;
+}
