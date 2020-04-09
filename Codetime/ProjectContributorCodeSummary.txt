@@ -1,0 +1,31 @@
+PROJECT SUMMARY                            (Last updated on Thu, Apr 9th 9:12am)
+
+Project: https://github.com/Balaji751/SAD.git
+
+                                                           Today (Apr 9th, 2020)
+--------------------------------------------------------------------------------
+Metric                                                 You |    All Contributors
+--------------------------------------------------------------------------------
+Commits             :                                    0 |                   0
+Files changed       :                                    0 |                   0
+Insertions          :                                    0 |                   0
+Deletions           :                                    0 |                   0
+
+                                                       Yesterday (Apr 8th, 2020)
+--------------------------------------------------------------------------------
+Metric                                                 You |    All Contributors
+--------------------------------------------------------------------------------
+Commits             :                                    4 |                   5
+Files changed       :                                   13 |                  22
+Insertions          :                                  109 |                 214
+Deletions           :                                    0 |                   0
+
+                                      This week (Apr 5th, 2020 to Apr 9th, 2020)
+--------------------------------------------------------------------------------
+Metric                                                 You |    All Contributors
+--------------------------------------------------------------------------------
+Commits             :                                    4 |                   5
+Files changed       :                                   13 |                  22
+Insertions          :                                  109 |                 214
+Deletions           :                                    0 |                   0
+

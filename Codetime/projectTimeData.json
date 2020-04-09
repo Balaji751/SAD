@@ -1,0 +1,22 @@
+[
+    {
+        "timestamp": 1586456999,
+        "timestamp_local": 1586456999,
+        "now_local": 1586426135,
+        "editor_seconds": 210,
+        "session_seconds": 0,
+        "file_seconds": 0,
+        "day": "2020-04-09",
+        "project": {
+            "directory": "c:\\Users\\SREE BALAJI\\SAD\\SAD\\Modue 3\\Task-4",
+            "name": "Task-4",
+            "resource": {
+                "branch": "master",
+                "identifier": "https://github.com/Balaji751/SAD.git",
+                "email": "balajisri233@msitprogram.net",
+                "tag": "heads/master"
+            },
+            "identifier": "https://github.com/Balaji751/SAD.git"
+        }
+    }
+]
