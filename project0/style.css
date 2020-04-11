@@ -22,9 +22,10 @@ body {
     margin-left:75px;
 }
 
+
 @media (max-width: 600px) {
   body {
-    background-color:yellowgreen;
+    background-color:rgb(61, 102, 114);
     } 
 }
 body, html {
@@ -68,6 +69,8 @@ body, html {
     padding: 20px;
     text-align: center;
   }
+
+  
 
   
  
