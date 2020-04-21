@@ -1,6 +1,6 @@
 import os
 import datetime
-from flask import Flask,session,render_template,request
+from flask import Flask,session,render_template,request,redirect,url_for
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session,sessionmaker
@@ -24,7 +24,8 @@ db.init_app(app)
 @app.route("/")
 
 def index():
-    return render_template("index.html")
+
+    return render_template("index.html",flag=True)
 
 @app.route("/register",methods=["GET","POST"])
 def register():
@@ -33,23 +34,60 @@ def register():
         email=request.form.get("email")
         password=request.form.get("psw")
         dt=datetime.datetime.now()
-        data=Registers(email=email,password=password,timestamp=dt)
-        db.session.add(data)
-        db.session.commit()
+        data2 = Registers.query.all()
+        for user in data2:
+            if email == user.email:
+                return "<h2 Style='color: red;text-align:center'>You already have registered !Please Login </h2>"
         if not email:
-            text="Please enter email to register"
-            return render_template("registernames.html",name=text,msg="ERROR")
+            text = "Please enter username to register"
+            return render_template("registernames.html", name=text, msg="ERROR")
         elif not password:
             text="Please provide password"
-            return render_template("registernames.html",name=text,msg="ERROR")
+            return render_template("registernames.html", name=text ,msg="ERROR")
         else:
+            data = Registers(email=email,password=password,timestamp=dt)
+            db.session.add(data)
+            db.session.commit()
             return render_template("registernames.html",msg="SUCCESS")
-    return render_template("index.html")
+    return render_template("index.html", flag=True)
 
 @app.route("/admin")
 def admin():
     data1 = Registers.query.all()
     return render_template("registerlist.html", name=data1)
+
+
+@app.route("/auth",methods=["GET","POST"])
+def userhome():
+    if(request.method=="POST"):
+        email=request.form.get("email")
+        password=request.form.get("psw")
+        if not email:
+            text = "Please enter email to register"
+            return render_template("registernames.html", name=text, msg="ERROR")
+        elif not password:
+            text="Please provide password"
+            return render_template("registernames.html", name=text ,msg="ERROR")
+        data3=Registers.query.all()
+        for each in data3:
+            if each.email==email:
+                if each.password==password:
+                    session["email"]=each.email
+                    return redirect("/user")
+        return render_template("index.html",flag=False)
+    if(request.method=="GET"):
+        return redirect(url_for('register'))
+
+@app.route("/logout")
+def sessiontimeout():
+    session.pop("email",None)
+    return redirect(url_for('register'))
+
+@app.route("/user")
+def user():
+    if session.get("email") is not None:
+        return render_template("user.html")
+    return redirect(url_for('register'))
 
 
 def main():
