@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            BOOK PAGE
+        </title>
+        <style>
+            h1{
+                text-align: center;
+                color: black;
+            }
+            tr th{
+                color:blue;
+            }
+            tr td{
+                color:blueviolet
+            }
+            .btn {
+            background-color: rgb(71, 165, 223);
+            color: white;
+            padding: 16px 20px;
+            margin : 8px 0;
+            margin-left: auto;
+            border: none;
+            cursor: pointer;
+            width: 50%;
+            opacity: 1;
+            
+        }
+        body{
+            text-align: center;
+        }
+        table{
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 20px;
+        }
+        </style>
+    </head>
+    <body style="background-color: antiquewhite;">
+        <h1>
+            Welcome to the details of the book you are searching for...
+        </h1>
+        <table style="width:30%;">
+            {% for each in book_details %}
+            <img src="http://covers.openlibrary.org/b/isbn/{{each.isbn}}-M.jpg" alt={{each.title}} height="300" width="200">
+            
+            <tr>
+                <th>
+                    ISBN:
+                </th>
+                <td>{{each.isbn}}</td>
+            </tr>
+            <tr>
+                <th>
+                    TITLE:
+                </th>
+                <td>{{each.title}}</td>
+            </tr>
+            <tr>
+                <th>
+                    AUTHOR:
+                </th>
+                <td>{{each.author}}</td>
+            </tr>
+            <tr>
+                <th>
+                    PUBLISHED YEAR:
+                </th>
+                <td>{{each.pub_year}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <form>
+            <input type="submit" value="Logout" formaction="/logout" class="btn">
+        </form>
+        
+    </body>
+</html>
