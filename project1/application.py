@@ -7,6 +7,7 @@ from sqlalchemy.orm import scoped_session,sessionmaker
 from models import *
 
 
+
 app=Flask(__name__)
 
 if not os.getenv("DATABASE_URL"):
@@ -89,6 +90,14 @@ def user():
         return render_template("user.html")
     return redirect(url_for('register'))
 
+@app.route("/book",methods=["GET"])
+@app.route("/book/<isbn>")
+def book(isbn):
+    # bookresult = db.session.query(Book).filter(Book.isbn == isbn)
+    bookresult = Book.query.filter_by(isbn=isbn).all()
+
+    print(bookresult)
+    return render_template("book.html",book_details=bookresult)
 
 def main():
     app.app_context().push()
