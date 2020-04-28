@@ -4,6 +4,7 @@ from flask import Flask,session,render_template,request,redirect,url_for
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session,sessionmaker
+from sqlalchemy import or_
 from models import *
 
 
@@ -39,7 +40,7 @@ def register():
             if email == user.email:
                 return "<h2 Style='color: red;text-align:center'>You already have registered !Please Login </h2>"
         if not email:
-            text = "Please enter username to register"
+            text = "Please enter email to register"
             return render_template("registernames.html", name=text, msg="ERROR")
         elif not password:
             text="Please provide password"
@@ -83,12 +84,48 @@ def sessiontimeout():
     session.pop("email",None)
     return redirect(url_for('register'))
 
-@app.route("/user")
+@app.route("/user",methods=["GET","POST"])
 def user():
-    if session.get("email") is not None:
-        return render_template("user.html")
-    return redirect(url_for('register'))
+    if session.get("email") is None:
+         return redirect(url_for('register'))
+    if (request.method == "POST"):
+        search = request.form.get("search")
+        print(search)
+        search_query="%"+search+"%"
+        
+        books = Book.query.filter(or_(Book.title.like(search_query), Book.author.like(search_query), Book.isbn.like(search_query))).all()
+        print(books)
+        c=0
+        for each in books:
+            c=c+1
+        print(c)
+        if books == []:
+            return render_template("user.html",name=books, flag=False,var=True)
+        return render_template("user.html",name=books,flag=False)
+    return render_template("user.html",flag=True)
 
+@app.route("/book",methods=["GET","POST"])
+@app.route("/book/<isbn>",methods=["GET","POST"])
+def book(isbn):
+    if (request.method=="GET"):
+        book = Book.query.filter_by(isbn =isbn).all()
+        review1=Review.query.filter_by(isbn=isbn).all()
+        #print(review1) 
+        return render_template("book.html",isbn=isbn,title=book[0].title,author=book[0].author,pub_year=book[0].pub_year,review1=review1)
+    if (request.method=="POST"):
+        rating=request.form.get("rating")
+        comment=request.form.get("comment")
+        unique=isbn + "_" +session["email"]
+        print(session["email"])
+        try:
+            reviews=Review(isbn=isbn,username=session["email"],rating=rating,review=comment,isbnusername=unique)
+            db.session.add(reviews)
+            db.session.commit()
+            book = Book.query.filter_by(isbn =isbn).all()
+            review1=Review.query.filter_by(isbn=isbn).all()
+        except:
+            return render_template("error.html")     
+        return render_template("book.html",isbn=isbn,title=book[0].title,author=book[0].author,pub_year=book[0].pub_year,review1=review1)
 
 def main():
     app.app_context().push()
